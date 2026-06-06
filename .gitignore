@@ -1,0 +1,17 @@
+# Entorno virtual
+models/
+venv/
+.venv/
+env/
+data/
+
+# Carpetas de datos pesados (¡Para que no intente subir gigas de imágenes!)
+data/raw/
+data/processed/
+
+# Archivos temporales de Python y VS Code
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+
