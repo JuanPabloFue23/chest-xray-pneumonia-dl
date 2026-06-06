@@ -48,3 +48,56 @@ El rendimiento definitivo de ambos modelos fue evaluado de forma estricta utiliz
 3. **Eficiencia en el Entrenamiento:** Gracias a la implementación de estrategias de regularización como *Dropout*, tasas de aprendizaje asimétricas ($1\times 10^{-3}$ para extracción y $1\times 10^{-5}$ para ajuste fino) y el uso de callbacks dinámicos como `ReduceLROnPlateau`, ambos modelos convergieron de manera estable sin presentar síntomas de sobreajuste (*overfitting*), devolviendo curvas de pérdida en validación sumamente limpias y decrecientes.
 
 ---
+
+## 🛠️ Requisitos y Guía de Reproducción
+
+Debido a restricciones de almacenamiento y siguiendo las buenas prácticas de ingeniería de software para Inteligencia Artificial, las carpetas de datos originales (`data/`) y los archivos de pesos de los modelos entrenados (`models/`) han sido excluidos del control de versiones mediante el archivo `.gitignore`. 
+
+Sigue estos pasos exactos para reconstruir el entorno local, descargar los datos y reproducir los experimentos desde cero:
+
+### 1. Clonar el Repositorio y Configurar el Entorno
+Abre tu terminal en tu máquina local y ejecuta de forma secuencial:
+
+```bash
+# Clonar el proyecto
+git clone [https://github.com/JuanPabloFue23/chest-xray-pneumonia-dl.git](https://github.com/JuanPabloFue23/chest-xray-pneumonia-dl.git)
+cd chest-xray-pneumonia-dl
+
+# Crear el entorno virtual de aislamiento
+python -m venv venv
+
+# Activar el entorno virtual
+# En macOS/Linux:
+source venv/bin/activate
+# En Windows (PowerShell):
+.\venv\Scripts\Activate.ps1
+
+# Actualizar pip e instalar dependencias del proyecto
+pip install --upgrade pip
+pip install -r requirements.txt
+
+### 2. Adquisición y Descarga del Dataset
+1. Descarga el conjunto de datos oficial *Chest X-Ray Images (Pneumonia)* directamente desde Kaggle.
+2. Crea una carpeta llamada `data` en la raíz de este proyecto y dentro de ella una subcarpeta llamada `raw`.
+3. Descomprime los archivos descargados de modo que la estructura interna coincida exactamente con el siguiente esquema:
+
+```text
+chest-xray-pneumonia-dl/
+├── data/
+│   ├── raw/
+│   │   └── chest_xray/
+│   │       ├── train/       # Imágenes de entrenamiento originales
+│   │       ├── val/         # Imágenes de validación originales
+│   │       └── test/        # Imágenes de prueba originales
+
+### 3. Pipeline de Ejecución (Secuencia de Notebooks)
+Abre el entorno en tu IDE preferido (como VS Code), asegúrate de seleccionar el entorno virtual `.venv` recién creado como tu Kernel de Jupyter, y ejecuta los cuadernos ubicados en la carpeta `notebooks/` en el siguiente orden estricto:
+
+1. **`01_eda_preprocessing.ipynb`**: 
+   * Ejecuta este cuaderno primero. Se encargará de leer los datos de `data/raw/`, realizar el análisis de dimensiones, procesar el desbalanceo de clases y reestructurar de forma automática la partición de datos, guardando los resultados listos en una nueva carpeta automática llamada `data/processed/`.
+   
+2. **`02_baseline_model.ipynb`**:
+   * Entrena la arquitectura de Red Neuronal Convolucional (CNN) desde cero utilizando el flujo optimizado de datos procesados. Al finalizar la ejecución, el cuaderno creará de forma automática la carpeta `models/` localmente y guardará el archivo de pesos `baseline_cnn.h5`.
+
+3. **`03_advanced_model.ipynb`**:
+   * Corre este cuaderno al final para ejecutar las fases de *Transfer Learning* y *Fine-Tuning* con la arquitectura **ResNet50V2**. Generará el archivo de pesos definitivo `advanced_resnet.h5` en tu carpeta local de modelos y desplegará las matrices de confusión comparativas.
