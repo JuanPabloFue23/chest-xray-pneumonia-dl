@@ -92,6 +92,8 @@ chest-xray-pneumonia-dl/
 │   │       ├── val/         # Imágenes de validación originales
 │   │       └── test/        # Imágenes de prueba originales
 
+```
+
 ### 3. Pipeline de Ejecución (Secuencia de Notebooks)
 Abre el entorno en tu IDE preferido (como VS Code), asegúrate de seleccionar el entorno virtual `.venv` recién creado como tu Kernel de Jupyter, y ejecuta los cuadernos ubicados en la carpeta `notebooks/` en el siguiente orden estricto:
 
