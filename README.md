@@ -76,6 +76,8 @@ source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 
+```
+
 ### 2. Adquisición y Descarga del Dataset
 1. Descarga el conjunto de datos oficial *Chest X-Ray Images (Pneumonia)* directamente desde Kaggle.
 2. Crea una carpeta llamada `data` en la raíz de este proyecto y dentro de ella una subcarpeta llamada `raw`.
